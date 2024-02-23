@@ -28,17 +28,20 @@ export default function Home() {
               Resi pengiriman untuk setiap status perjalanan
             </Text>
           </Box>
-          <Box>
+          <Stack direction="row" spacing={4} align="center" justifyContent={"right"}>
             <Button mb={2} colorScheme="blue" size={"sm"}>
               Tambah Data Baru
             </Button>
-          </Box>
+            <Button mb={2} colorScheme="blue" size={"sm"}>
+              Import Excel Hasil Scan
+            </Button>
+          </Stack>
         </CardHeader>
         <Divider color={"gray.300"} />
         <CardBody>
           <Stack direction="row" spacing={4} align="center">
             <Button colorScheme="teal" variant="outline" size={"sm"} minWidth={"150px"}>
-              Scan Depo (20)
+              Scan dari Depo (20)
             </Button>
             <Button colorScheme="blue" variant="outline" size={"sm"} minWidth={"150px"}>
               Sudah Dikemas (15)

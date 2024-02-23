@@ -15,7 +15,7 @@ import { AiFillEdit } from "react-icons/ai";
 import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
 import PaginationComponent from "./PaginationComponent";
 
-export default function TableComponent () {
+export default function TableComponent() {
   const header = ["name", "created", "actions"];
   const data = [
     { name: "Daggy", created: "7 days ago" },
@@ -104,8 +104,7 @@ export default function TableComponent () {
                             display: "none",
                           },
                           textTransform: "uppercase",
-                          color: "black",
-                          fontSize: "xs",
+                          fontSize: "md",
                           fontWeight: "bold",
                           letterSpacing: "wider",
                           fontFamily: "heading",
@@ -114,9 +113,11 @@ export default function TableComponent () {
                         {x}
                       </Td>
                       <Td
-                        color={"gray.500"}
                         fontSize="md"
-                        fontWeight="hairline"
+                        sx={{
+                          letterSpacing: "wider",
+                          fontFamily: "heading",
+                        }}
                       >
                         {token[x]}
                       </Td>
@@ -170,4 +171,4 @@ export default function TableComponent () {
       <PaginationComponent />
     </Flex>
   );
-};
+}

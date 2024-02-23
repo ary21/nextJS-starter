@@ -98,7 +98,7 @@ export default function Template({ children }) {
           color="white"
           fontWeight="semibold"
         >
-          MYAPP
+          CargoAPP
         </Text>
       </Flex>
       <Flex
