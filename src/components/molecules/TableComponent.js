@@ -23,8 +23,8 @@ export default function TableComponent () {
     { name: "Josef", created: "A few seconds ago" },
     { name: "Sage", created: "A few hours ago" },
   ];
-  const color1 = useColorModeValue("gray.400", "gray.400");
-  const color2 = useColorModeValue("gray.400", "gray.400");
+  const color1 = useColorModeValue("black.500", "black.500");
+  const color2 = useColorModeValue("black.500", "black.500");
 
   return (
     <Flex
@@ -104,7 +104,7 @@ export default function TableComponent () {
                             display: "none",
                           },
                           textTransform: "uppercase",
-                          color: color1,
+                          color: "black",
                           fontSize: "xs",
                           fontWeight: "bold",
                           letterSpacing: "wider",

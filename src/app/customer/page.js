@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/react";
 import TableComponent from "@/components/molecules/TableComponent";
 
-export default function Tracking() {
+export default function Customer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -31,8 +31,8 @@ export default function Tracking() {
       <Card>
         <CardHeader display="flex" justifyContent="space-between" alignContent="center">
           <Box>
-            <Text variant={"h1"} fontWeight={"bold"}>Tracking</Text>
-            <Text variant={"h2"}>Tracking riwayat perjalanan semua resi</Text>
+            <Text variant={"h1"} fontWeight={"bold"}>Penerima</Text>
+            <Text variant={"h2"}>Penerima setiap resi pengiriman</Text>
           </Box>
           <Box>
             <Button mb={2} colorScheme="blue" size={"sm"} onClick={onOpen}>

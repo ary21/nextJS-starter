@@ -98,7 +98,7 @@ export default function Template({ children }) {
           color="white"
           fontWeight="semibold"
         >
-          CARGO
+          MYAPP
         </Text>
       </Flex>
       <Flex
@@ -111,8 +111,8 @@ export default function Template({ children }) {
         <NavItem icon={HiCollection} onClick={() => onNavItemClick('/')}>Resi</NavItem>
         <NavItem icon={FaClipboardCheck} onClick={() => onNavItemClick('/manifest')}>Manifest</NavItem>
         <NavItem icon={FaRss} onClick={() => onNavItemClick('/tracking')}>Tracking</NavItem>
+        <NavItem icon={MdHome} onClick={onNavItemClick('/customer')}>Penerima</NavItem>
         <NavItem icon={BsGearFill} onClick={() => onNavItemClick('/setting')}>Pengaturan</NavItem>
-        {/* <NavItem icon={MdHome} onClick={onNavItemClick('')}>Home</NavItem> */}
         {/*
         <NavItem icon={HiCode} onClick={integrations.onToggle}>
           Integrations

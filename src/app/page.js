@@ -1,18 +1,58 @@
-import { Box } from "@chakra-ui/react";
-import styles from "./page.module.css";
-import Image from "next/image";
+"use client";
+import {
+  Box,
+  Card,
+  CardHeader,
+  Text,
+  Button,
+  CardBody,
+  Stack,
+  Divider
+} from "@chakra-ui/react";
+import TableComponent from "@/components/molecules/TableComponent";
 
 export default function Home() {
   return (
-    <Box w="full" p={4} display="flex" flexDirection="column" alignItems={"center"} gap={4}>
-      <Image
-        src="/next.svg"
-        alt="Next.js Logo"
-        width={100}
-        height={10}
-        priority
-      />
-      <p>Home</p>
+    <Box w="full">
+      <Card>
+        <CardHeader
+          display="flex"
+          justifyContent="space-between"
+          alignContent="center"
+        >
+          <Box>
+            <Text variant={"h1"} fontWeight={"bold"}>
+              Resi
+            </Text>
+            <Text variant={"h2"}>
+              Resi pengiriman untuk setiap status perjalanan
+            </Text>
+          </Box>
+          <Box>
+            <Button mb={2} colorScheme="blue" size={"sm"}>
+              Tambah Data Baru
+            </Button>
+          </Box>
+        </CardHeader>
+        <Divider color={"gray.300"} />
+        <CardBody>
+          <Stack direction="row" spacing={4} align="center">
+            <Button colorScheme="teal" variant="outline" size={"sm"} minWidth={"150px"}>
+              Scan Depo (20)
+            </Button>
+            <Button colorScheme="blue" variant="outline" size={"sm"} minWidth={"150px"}>
+              Sudah Dikemas (15)
+            </Button>
+            <Button colorScheme="yellow" variant="outline" size={"sm"} minWidth={"150px"}>
+              Dalam Perjalanan (32)
+            </Button>
+            <Button colorScheme="green" variant="outline" size={"sm"} minWidth={"150px"}>
+              Selesai
+            </Button>
+          </Stack>
+          <TableComponent />
+        </CardBody>
+      </Card>
     </Box>
   );
 }
