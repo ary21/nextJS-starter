@@ -8,10 +8,11 @@ import {
   Divider
 } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import Template from "@/components/Template/Template";
 
 export default function Setting() {
   return (
-    <Box>
+    <Template>
       <Card>
         <CardHeader
           display="flex"
@@ -52,6 +53,6 @@ export default function Setting() {
           </Tabs>
         </CardBody>
       </Card>
-    </Box>
+    </Template>
   );
 }

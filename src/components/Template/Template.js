@@ -20,7 +20,7 @@ import { FaBell, FaClipboardCheck, FaRss } from "react-icons/fa";
 import { AiFillGift } from "react-icons/ai";
 import { BsGearFill } from "react-icons/bs";
 import { FiMenu, FiSearch } from "react-icons/fi";
-import { HiCode, HiCollection } from "react-icons/hi";
+import { HiOutlineLogout, HiCollection } from "react-icons/hi";
 import { MdHome, MdKeyboardArrowRight } from "react-icons/md";
 import React from "react";
 import { useRouter } from 'next/navigation'
@@ -98,7 +98,7 @@ export default function Template({ children }) {
           color="white"
           fontWeight="semibold"
         >
-          CargoAPP
+          MyAPP
         </Text>
       </Flex>
       <Flex
@@ -108,11 +108,11 @@ export default function Template({ children }) {
         color="white"
         aria-label="Main Navigation"
       >
-        <NavItem icon={HiCollection} onClick={() => onNavItemClick('/')}>Resi</NavItem>
-        <NavItem icon={FaClipboardCheck} onClick={() => onNavItemClick('/manifest')}>Manifest</NavItem>
-        <NavItem icon={FaRss} onClick={() => onNavItemClick('/tracking')}>Tracking</NavItem>
-        <NavItem icon={MdHome} onClick={onNavItemClick('/customer')}>Penerima</NavItem>
-        <NavItem icon={BsGearFill} onClick={() => onNavItemClick('/setting')}>Pengaturan</NavItem>
+        <NavItem icon={HiCollection} onClick={() => onNavItemClick('/')}>Home</NavItem>
+        {/* <NavItem icon={FaClipboardCheck} onClick={() => onNavItemClick('/manifest')}>Manifest</NavItem> */}
+        {/* <NavItem icon={FaRss} onClick={() => onNavItemClick('/tracking')}>Tracking</NavItem> */}
+        <NavItem icon={MdHome} onClick={() => onNavItemClick('/customer')}>Customer</NavItem>
+        <NavItem icon={BsGearFill} onClick={() => onNavItemClick('/setting')}>Setting</NavItem>
         {/*
         <NavItem icon={HiCode} onClick={integrations.onToggle}>
           Integrations
@@ -133,8 +133,8 @@ export default function Template({ children }) {
             Zapier
           </NavItem>
         </Collapse>
-        <NavItem icon={AiFillGift}>Changelog</NavItem>
         */}
+        <NavItem icon={HiOutlineLogout} onClick={() => onNavItemClick('/auth/login')}>Logout</NavItem>
       </Flex>
     </Box>
   );
@@ -154,6 +154,7 @@ export default function Template({ children }) {
       </Drawer>
       
       <Box ml={{ base: 0, md: 60 }} transition=".3s ease">
+        {/* NOTE : i just want content full height
         <Flex
           as="header"
           align="center"
@@ -174,10 +175,10 @@ export default function Template({ children }) {
             size="sm"
           />
           <InputGroup w="96" display={{ base: "none", md: "flex" }}>
-            {/* <InputLeftElement color="gray.500">
+            <InputLeftElement color="gray.500">
               <FiSearch />
             </InputLeftElement>
-            <Input placeholder="Search here..." /> */}
+            <Input placeholder="Search here..." />
           </InputGroup>
 
           <Flex align="center">
@@ -190,7 +191,8 @@ export default function Template({ children }) {
               cursor="pointer"
             />
           </Flex>
-        </Flex>
+        </Flex> 
+        */}
 
         <Box as="main" p="4">
           <Box rounded="md" minH="96">

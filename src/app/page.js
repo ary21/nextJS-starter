@@ -7,13 +7,28 @@ import {
   Button,
   CardBody,
   Stack,
-  Divider
+  Divider,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  Input,
+  FormHelperText,
+  useDisclosure
 } from "@chakra-ui/react";
 import TableComponent from "@/components/molecules/TableComponent";
+import Template from "@/components/Template/Template";
 
 export default function Home() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
-    <Box w="full">
+    <Template>
       <Card>
         <CardHeader
           display="flex"
@@ -29,7 +44,7 @@ export default function Home() {
             </Text>
           </Box>
           <Stack direction="row" spacing={4} align="center" justifyContent={"right"}>
-            <Button mb={2} colorScheme="blue" size={"sm"}>
+            <Button mb={2} colorScheme="blue" size={"sm"} onClick={onOpen}>
               Tambah Data Baru
             </Button>
             <Button mb={2} colorScheme="blue" size={"sm"}>
@@ -56,6 +71,31 @@ export default function Home() {
           <TableComponent />
         </CardBody>
       </Card>
-    </Box>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Form</ModalHeader>
+          <ModalCloseButton />
+
+          <ModalBody>
+            <FormControl>
+              <FormLabel>Email address</FormLabel>
+              <Input type="email" />
+              <FormHelperText>We will never share your email.</FormHelperText>
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button variant="solid" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button colorScheme="blue" onClick={onClose}>
+              Submit
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </Template>
   );
 }

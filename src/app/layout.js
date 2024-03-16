@@ -1,6 +1,5 @@
-import { ThemeProviders } from "../components/providers/themeProvider";
 import { Inter } from "next/font/google";
-import Template from "@/components/organisms/Template";
+import { ThemeProviders } from "../components/providers/themeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -13,9 +12,7 @@ export default function RootLayout({ children, pageProps }) {
     <html lang="en" {...pageProps}>
       <body>
         <ThemeProviders>
-          <Template>
-            {children}
-          </Template>
+          {children}
         </ThemeProviders>
       </body>
     </html>

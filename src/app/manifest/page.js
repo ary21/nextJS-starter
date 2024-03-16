@@ -22,12 +22,13 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import TableComponent from "@/components/molecules/TableComponent";
+import Template from "@/components/Template/Template";
 
 export default function Manifest() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box>
+    <Template>
       <Card>
         <CardHeader display="flex" justifyContent="space-between" alignContent="center">
           <Box>
@@ -71,6 +72,6 @@ export default function Manifest() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Box>
+    </Template>
   );
 }
