@@ -22,13 +22,13 @@ import {
   Divider
 } from "@chakra-ui/react";
 import TableComponent from "@/components/molecules/TableComponent";
-import Template from "@/components/Template/Template";
+import AppLayout from "@/components/layout/AppLayout";
 
 export default function Tracking() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Template>
+    <AppLayout>
       <Card>
         <CardHeader display="flex" justifyContent="space-between" alignContent="center">
           <Box>
@@ -72,6 +72,6 @@ export default function Tracking() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Template>
+    </AppLayout>
   );
 }

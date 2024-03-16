@@ -21,19 +21,26 @@ import {
   Box,
   Divider
 } from "@chakra-ui/react";
+// import { useRouter } from "next/router";
 import TableComponent from "@/components/molecules/TableComponent";
-import AppLayout from "@/components/layout/AppLayout";
+import { HOST } from "@/common/config/constant";
 
-export default function Customer() {
+const AdminContent = ({ users }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  // const router = useRouter();
+  const onDelete = async (id) => {
+    await fetch(`${HOST}/api/users/${id}`, { method: API_METHOD.DELETE });
+    alert(`Succes delete : ${id}`);
+    // router.push("/users");
+  };
   return (
-    <AppLayout>
+    <>
       <Card>
         <CardHeader display="flex" justifyContent="space-between" alignContent="center">
           <Box>
-            <Text variant={"h1"} fontWeight={"bold"}>Penerima</Text>
-            <Text variant={"h2"}>Penerima setiap resi pengiriman</Text>
+            <Text variant={"h1"} fontWeight={"bold"}>User Admin</Text>
+            <Text variant={"h2"}>Menampilkan semua user admin</Text>
           </Box>
           <Box>
             <Button mb={2} colorScheme="blue" size={"sm"} onClick={onOpen}>
@@ -72,6 +79,8 @@ export default function Customer() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </AppLayout>
-  );
+    </>
+  )
 }
+
+export default AdminContent;

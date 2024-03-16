@@ -8,11 +8,11 @@ import {
   Divider
 } from "@chakra-ui/react";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
-import Template from "@/components/Template/Template";
+import AppLayout from "@/components/layout/AppLayout";
 
 export default function Setting() {
   return (
-    <Template>
+    <AppLayout>
       <Card>
         <CardHeader
           display="flex"
@@ -23,7 +23,7 @@ export default function Setting() {
             <Text variant={"h1"} fontWeight={"bold"}>
               Pengaturan
             </Text>
-            <Text variant={"h2"}>Pengaturan umum sistem aplikasi cargo</Text>
+            <Text variant={"h2"}>Pengaturan umum sistem aplikasi</Text>
           </Box>
           <Box>
             {/* <Button mb={2} colorScheme="blue" size={"sm"}>
@@ -35,9 +35,9 @@ export default function Setting() {
         <CardBody>
           <Tabs>
             <TabList>
+              <Tab>General</Tab>
               <Tab>Armada</Tab>
               <Tab>Driver</Tab>
-              <Tab>Admin</Tab>
             </TabList>
             <TabPanels>
               <TabPanel>
@@ -53,6 +53,6 @@ export default function Setting() {
           </Tabs>
         </CardBody>
       </Card>
-    </Template>
+    </AppLayout>
   );
 }

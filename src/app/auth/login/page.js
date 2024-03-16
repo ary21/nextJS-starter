@@ -5,23 +5,18 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import {
   Stack,
-  Flex,
-  Heading,
   Input,
   Button,
   InputGroup,
   InputLeftElement,
-  chakra,
-  Box,
   Link,
-  Avatar,
   FormControl,
   FormHelperText,
   InputRightElement,
 } from "@chakra-ui/react";
 import { validateEmail } from "@/common/utils/index";
-import AuthLayout from "@/components/Template/AuthLayout";
-import { HiUserCircle, HiLockOpen, HiCollection } from "react-icons/hi";
+import AuthLayout from "@/components/layout/AuthLayout";
+import { HiUserCircle, HiLockOpen } from "react-icons/hi";
 
 function LoginPage() {
   const [email, setEmail] = useState("");

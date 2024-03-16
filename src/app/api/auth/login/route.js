@@ -1,5 +1,6 @@
+import prisma from "@/common/prisma/prisma";
+import { compare, hash } from "bcrypt";
 import { SHA256 as sha256 } from "crypto-js";
-import prisma from "@/common/service/prisma";
 
 export default async function handle(req, res) {
   if (req.method === "POST") {
@@ -26,7 +27,11 @@ async function loginUserHandler(req, res) {
         password: true,
       },
     });
-    if (user && user.password === hashPassword(password)) {
+    const isPasswordValid = await compare(
+      password,
+      user.password
+    )
+    if (user && isPasswordValid) { // user.password === hash(password)
       return res.status(200).json(exclude(user, ["password"]));
     } else {
       return res.status(401).json({ message: "invalid credentials" });
@@ -36,10 +41,6 @@ async function loginUserHandler(req, res) {
     throw new Error(e);
   }
 }
-
-const hashPassword = (string) => {
-  return sha256(string).toString();
-};
 
 function exclude(user, keys) {
   for (let key of keys) {

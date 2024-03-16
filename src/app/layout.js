@@ -3,8 +3,8 @@ import { ThemeProviders } from "../components/providers/themeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Cargo",
-  description: "Online Cargo App Custome",
+  title: "MyApp",
+  description: "Online Admin App Custome",
 };
 
 export default function RootLayout({ children, pageProps }) {

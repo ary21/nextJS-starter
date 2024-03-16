@@ -22,13 +22,13 @@ import {
   useDisclosure
 } from "@chakra-ui/react";
 import TableComponent from "@/components/molecules/TableComponent";
-import Template from "@/components/Template/Template";
+import AppLayout from "@/components/layout/AppLayout";
 
 export default function Home() {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Template>
+    <AppLayout>
       <Card>
         <CardHeader
           display="flex"
@@ -96,6 +96,6 @@ export default function Home() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Template>
+    </AppLayout>
   );
 }

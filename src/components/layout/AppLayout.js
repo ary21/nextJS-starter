@@ -1,35 +1,24 @@
 'use client'
 import {
-  Avatar,
   Box,
-  Collapse,
   Drawer,
   DrawerContent,
   DrawerOverlay,
   Flex,
   Icon,
-  IconButton,
-  Input,
-  InputGroup,
-  InputLeftElement,
   Text,
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { FaBell, FaClipboardCheck, FaRss } from "react-icons/fa";
-import { AiFillGift } from "react-icons/ai";
 import { BsGearFill } from "react-icons/bs";
-import { FiMenu, FiSearch } from "react-icons/fi";
-import { HiOutlineLogout, HiCollection } from "react-icons/hi";
-import { MdHome, MdKeyboardArrowRight } from "react-icons/md";
+import { HiOutlineLogout, HiCollection, HiUsers } from "react-icons/hi";
+import { MdHome } from "react-icons/md";
 import React from "react";
 import { useRouter } from 'next/navigation'
-import Image from "next/image";
 
-export default function Template({ children }) {
+export default function AppLayout({ children }) {
   const router = useRouter()
   const sidebar = useDisclosure();
-  const integrations = useDisclosure();
   const color = useColorModeValue("gray.600", "gray.300");
 
   const onNavItemClick = (pageLink) => {
@@ -112,6 +101,7 @@ export default function Template({ children }) {
         {/* <NavItem icon={FaClipboardCheck} onClick={() => onNavItemClick('/manifest')}>Manifest</NavItem> */}
         {/* <NavItem icon={FaRss} onClick={() => onNavItemClick('/tracking')}>Tracking</NavItem> */}
         <NavItem icon={MdHome} onClick={() => onNavItemClick('/customer')}>Customer</NavItem>
+        <NavItem icon={HiUsers} onClick={() => onNavItemClick('/admin')}>Admin</NavItem>
         <NavItem icon={BsGearFill} onClick={() => onNavItemClick('/setting')}>Setting</NavItem>
         {/*
         <NavItem icon={HiCode} onClick={integrations.onToggle}>
