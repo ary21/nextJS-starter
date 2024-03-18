@@ -2,7 +2,7 @@ import React from "react";
 import { Flex } from "@chakra-ui/react";
 import Pagination from "@choc-ui/paginator";
 
-export default function PaginationComponent(){
+export default function PaginationComponent({ total }){
   return (
     <Flex
       w="full"
@@ -13,7 +13,7 @@ export default function PaginationComponent(){
     >
       <Pagination
         defaultCurrent={1}
-        total={50}
+        total={total}
         paginationProps={{ display: "flex" }}
       />
     </Flex>

@@ -59,7 +59,7 @@ export default function Home() {
         </CardHeader>
         <Divider color={"gray.300"} />
         <CardBody>
-          <Stack direction="row" spacing={4} align="center">
+          <Stack direction="row" spacing={4} align="center" mb={4}>
             <Button
               colorScheme="teal"
               variant="outline"
@@ -93,6 +93,7 @@ export default function Home() {
               Selesai
             </Button>
           </Stack>
+
           <TableComponent
             columns={[
               {
