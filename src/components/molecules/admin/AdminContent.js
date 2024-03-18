@@ -33,7 +33,7 @@ import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
 const AdminContent = ({ users }) => {
   // const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log('users content :> ', users);
+  console.log('users content >>> ', users.length);
 
   const onDelete = async (id) => {
     // await fetch(`${HOST}/api/users/${id}`, { method: API_METHOD.DELETE });
@@ -98,7 +98,7 @@ const AdminContent = ({ users }) => {
       <Card>
         <CardHeader display="flex" justifyContent="space-between" alignContent="center">
           <Box>
-            <Text variant={"h1"} fontWeight={"bold"}>User Admin</Text>
+            <Text variant={"h1"} fontWeight={"bold"}>Admin</Text>
             <Text variant={"h2"}>Menampilkan semua user admin</Text>
           </Box>
           <Box>
