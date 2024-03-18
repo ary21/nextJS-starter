@@ -2,7 +2,17 @@ import { prisma } from "@/common/prisma/prisma";
 
 export const getAllUsers = async (where) => {
   try {
-    return prisma.user.findMany(where);
+    return prisma.user.findMany({
+      where: { deletedAt: null, ...where },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        role: true,
+        deletedAt: true,
+      },
+    });
   } catch (error) {
     throw new Error("internal server error");
   }
@@ -10,7 +20,17 @@ export const getAllUsers = async (where) => {
 
 export const getUser = async (where) => {
   try {
-    return prisma.user.findUnique({ where: { where, deleteAt: null } });
+    return prisma.user.findUnique({
+      where: { deleteAt: null, ...where },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        role: true,
+        deletedAt: true,
+      },
+    });
   } catch (error) {
     throw new Error("internal server error");
   }
@@ -34,7 +54,10 @@ export const updateUser = async (id, data) => {
 
 export const deleteUser = async (id) => {
   try {
-    return prisma.user.update({ where: { id }, data: { deleteAt: new Date() } });
+    return prisma.user.update({
+      where: { id },
+      data: { deleteAt: new Date() },
+    });
   } catch (error) {
     throw new Error("internal server error");
   }

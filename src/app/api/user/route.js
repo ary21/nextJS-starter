@@ -5,7 +5,7 @@ import * as UserService from "@/common/service/UserService";
 
 export async function GET(req, res) {
   const users = await UserService.getAllUsers();
-  res.status(200).json({ data: users })
+  return Response.json({ data: users });
 }
 
 export async function POST(req, res) {
@@ -13,24 +13,24 @@ export async function POST(req, res) {
   const { name, email, phone, role, password } = req.body;
   if (!name || !email || !phone || !password || !role) {
     errors.push("invalid input");
-    return res.status(400).json({ status: 400, errors });
+    return Response.json({ status: 400, errors }, { status: 400 });
   }
   if (password.length < 6) {
     errors.push("password length should be more than 6 characters");
-    return res.status(400).json({ errors });
+    return Response.json({ errors }, { status: 400 });
   }
-  
+
   try {
     const user = await UserService.createUser({
       data: { name, email, phone, role, password: hash(req.body.password) },
     });
-    return res.status(201).json({ user });
+    return Response.json({ user }, { status: 201 });
   } catch (e) {
     if (e instanceof Prisma.PrismaClientKnownRequestError) {
       if (e.code === "P2002") {
-        return res.status(400).json({ message: e.message });
+        return Response.json({ message: e.message }, { status: 400 });
       }
-      return res.status(400).json({ message: e.message });
+      return Response.json({ message: e.message }, { status: 400 });
     }
   }
 }

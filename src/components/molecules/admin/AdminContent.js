@@ -22,18 +22,30 @@ import {
   Divider
 } from "@chakra-ui/react";
 // import { useRouter } from "next/router";
-import TableComponent from "@/components/molecules/TableComponent";
 import { HOST } from "@/common/config/constant";
+import TableComponent from "@/components/molecules/TableComponent";
 
 const AdminContent = ({ users }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
   // const router = useRouter();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log('users content :> ', users);
+
   const onDelete = async (id) => {
-    await fetch(`${HOST}/api/users/${id}`, { method: API_METHOD.DELETE });
-    alert(`Succes delete : ${id}`);
+    // await fetch(`${HOST}/api/users/${id}`, { method: API_METHOD.DELETE });
+    // alert(`Succes delete : ${id}`);
     // router.push("/users");
   };
+
+  const onEdit = async (id) => {
+    // get data
+    // modal
+  }
+
+  const submit = async () => {
+    // post
+    // put
+  }
+
   return (
     <>
       <Card>
