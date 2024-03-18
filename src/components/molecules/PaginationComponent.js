@@ -9,7 +9,7 @@ export default function PaginationComponent(){
       bg="white"
       alignItems="center"
       justifyContent="right"
-      mt={2}
+      mt={5}
     >
       <Pagination
         defaultCurrent={1}

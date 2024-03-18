@@ -19,11 +19,16 @@ import {
   FormHelperText,
   useDisclosure,
   Box,
-  Divider
+  Divider,
+  ButtonGroup,
+  IconButton,
+  Flex
 } from "@chakra-ui/react";
 // import { useRouter } from "next/router";
 import { HOST } from "@/common/config/constant";
 import TableComponent from "@/components/molecules/TableComponent";
+import { AiFillEdit } from "react-icons/ai";
+import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
 
 const AdminContent = ({ users }) => {
   // const router = useRouter();
@@ -46,8 +51,50 @@ const AdminContent = ({ users }) => {
     // put
   }
 
+  const columns = [
+    {
+      id: "name",
+      label: "Name",
+      selector: (row) => row.name,
+    },
+    {
+      id: "email",
+      label: "Email",
+      selector: (row) => row.email,
+    },
+    {
+      id: "phone",
+      label: "Telp",
+      selector: (row) => row.phone,
+    },
+    {
+      id: "action",
+      label: "Action",
+      selector: (row) => (
+        <ButtonGroup variant="solid" size="sm" spacing={3} id={`action-${row.id}`}>
+          <IconButton
+            colorScheme="blue"
+            icon={<BsBoxArrowUpRight />}
+            aria-label="Up"
+          />
+          <IconButton
+            colorScheme="green"
+            icon={<AiFillEdit />}
+            aria-label="Edit"
+          />
+          <IconButton
+            colorScheme="red"
+            variant="outline"
+            icon={<BsFillTrashFill />}
+            aria-label="Delete"
+          />
+        </ButtonGroup>
+      ),
+    }
+  ]
+
   return (
-    <>
+    <Flex h="100vh" flexDirection="column">
       <Card>
         <CardHeader display="flex" justifyContent="space-between" alignContent="center">
           <Box>
@@ -62,7 +109,7 @@ const AdminContent = ({ users }) => {
         </CardHeader>
         <Divider color={"gray.300"} />
         <CardBody>
-          <TableComponent />
+          <TableComponent data={users} columns={columns} />
         </CardBody>
         <CardFooter></CardFooter>
       </Card>
@@ -91,7 +138,7 @@ const AdminContent = ({ users }) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+    </Flex>
   )
 }
 

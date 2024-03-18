@@ -19,7 +19,7 @@ import {
   FormLabel,
   Input,
   FormHelperText,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 import TableComponent from "@/components/molecules/TableComponent";
 import AppLayout from "@/components/layout/AppLayout";
@@ -43,7 +43,12 @@ export default function Home() {
               Resi pengiriman untuk setiap status perjalanan
             </Text>
           </Box>
-          <Stack direction="row" spacing={4} align="center" justifyContent={"right"}>
+          <Stack
+            direction="row"
+            spacing={4}
+            align="center"
+            justifyContent={"right"}
+          >
             <Button mb={2} colorScheme="blue" size={"sm"} onClick={onOpen}>
               Tambah Data Baru
             </Button>
@@ -55,20 +60,59 @@ export default function Home() {
         <Divider color={"gray.300"} />
         <CardBody>
           <Stack direction="row" spacing={4} align="center">
-            <Button colorScheme="teal" variant="outline" size={"sm"} minWidth={"150px"}>
+            <Button
+              colorScheme="teal"
+              variant="outline"
+              size={"sm"}
+              minWidth={"150px"}
+            >
               Scan dari Depo (20)
             </Button>
-            <Button colorScheme="blue" variant="outline" size={"sm"} minWidth={"150px"}>
+            <Button
+              colorScheme="blue"
+              variant="outline"
+              size={"sm"}
+              minWidth={"150px"}
+            >
               Sudah Dikemas (15)
             </Button>
-            <Button colorScheme="yellow" variant="outline" size={"sm"} minWidth={"150px"}>
+            <Button
+              colorScheme="yellow"
+              variant="outline"
+              size={"sm"}
+              minWidth={"150px"}
+            >
               Dalam Perjalanan (32)
             </Button>
-            <Button colorScheme="green" variant="outline" size={"sm"} minWidth={"150px"}>
+            <Button
+              colorScheme="green"
+              variant="outline"
+              size={"sm"}
+              minWidth={"150px"}
+            >
               Selesai
             </Button>
           </Stack>
-          <TableComponent />
+          <TableComponent
+            columns={[
+              {
+                id: "name",
+                label: "Name",
+                selector: (row) => row.name,
+              },
+              {
+                id: "created",
+                label: "Created At",
+                selector: (row) => row.created,
+              },
+            ]}
+            data={[
+              { name: "Daggy", created: "7 days ago" },
+              { name: "Anubra", created: "23 hours ago" },
+              { name: "Josef", created: "A few seconds ago" },
+              { name: "Sage", created: "A few hours ago" },
+            ]}
+          />
         </CardBody>
       </Card>
 

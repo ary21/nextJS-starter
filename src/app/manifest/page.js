@@ -43,7 +43,7 @@ export default function Manifest() {
         </CardHeader>
         <Divider color={"gray.300"} />
         <CardBody>
-          <TableComponent />
+          <TableComponent data={[]} />
         </CardBody>
         <CardFooter></CardFooter>
       </Card>

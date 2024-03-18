@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   Box,
   Drawer,
@@ -9,21 +9,25 @@ import {
   Text,
   useColorModeValue,
   useDisclosure,
+  IconButton,
+  Image,
 } from "@chakra-ui/react";
 import { BsGearFill } from "react-icons/bs";
 import { HiOutlineLogout, HiCollection, HiUsers } from "react-icons/hi";
 import { MdHome } from "react-icons/md";
+import { FiMenu } from "react-icons/fi";
+import { useRouter } from "next/navigation";
 import React from "react";
-import { useRouter } from 'next/navigation'
 
 export default function AppLayout({ children }) {
-  const router = useRouter()
+  const router = useRouter();
   const sidebar = useDisclosure();
   const color = useColorModeValue("gray.600", "gray.300");
+  const wSideBar = 40;
 
   const onNavItemClick = (pageLink) => {
     router.push(pageLink);
-  }
+  };
 
   const NavItem = (props) => {
     const { icon, children, ...rest } = props;
@@ -69,7 +73,7 @@ export default function AppLayout({ children }) {
       left="0"
       zIndex="sticky"
       h="full"
-      w="60"
+      w={wSideBar}
       pb="10"
       overflowX="hidden"
       overflowY="auto"
@@ -80,14 +84,9 @@ export default function AppLayout({ children }) {
       {...props}
     >
       <Flex px="4" py="5" align="center">
-        {/* <Image src="/logo.svg" alt="Choc UI" width={32} height={32} /> */}
-        <Text
-          ml="2"
-          fontSize="2xl"
-          color="white"
-          fontWeight="semibold"
-        >
-          MyAPP
+        <Image src="/logo.svg" alt="Choc UI" height={12} />
+        <Text ml="2" fontSize="1xl" color="white" fontWeight="semibold">
+          AppName
         </Text>
       </Flex>
       <Flex
@@ -97,12 +96,20 @@ export default function AppLayout({ children }) {
         color="white"
         aria-label="Main Navigation"
       >
-        <NavItem icon={HiCollection} onClick={() => onNavItemClick('/')}>Home</NavItem>
+        <NavItem icon={HiCollection} onClick={() => onNavItemClick("/")}>
+          Home
+        </NavItem>
         {/* <NavItem icon={FaClipboardCheck} onClick={() => onNavItemClick('/manifest')}>Manifest</NavItem> */}
         {/* <NavItem icon={FaRss} onClick={() => onNavItemClick('/tracking')}>Tracking</NavItem> */}
-        <NavItem icon={MdHome} onClick={() => onNavItemClick('/customer')}>Customer</NavItem>
-        <NavItem icon={HiUsers} onClick={() => onNavItemClick('/admin')}>Admin</NavItem>
-        <NavItem icon={BsGearFill} onClick={() => onNavItemClick('/setting')}>Setting</NavItem>
+        <NavItem icon={MdHome} onClick={() => onNavItemClick("/customer")}>
+          Customer
+        </NavItem>
+        <NavItem icon={HiUsers} onClick={() => onNavItemClick("/admin")}>
+          Admin
+        </NavItem>
+        <NavItem icon={BsGearFill} onClick={() => onNavItemClick("/setting")}>
+          Setting
+        </NavItem>
         {/*
         <NavItem icon={HiCode} onClick={integrations.onToggle}>
           Integrations
@@ -124,7 +131,12 @@ export default function AppLayout({ children }) {
           </NavItem>
         </Collapse>
         */}
-        <NavItem icon={HiOutlineLogout} onClick={() => onNavItemClick('/auth/login')}>Logout</NavItem>
+        <NavItem
+          icon={HiOutlineLogout}
+          onClick={() => onNavItemClick("/auth/login")}
+        >
+          Logout
+        </NavItem>
       </Flex>
     </Box>
   );
@@ -142,9 +154,8 @@ export default function AppLayout({ children }) {
           <SidebarContent w="full" borderRight="none" />
         </DrawerContent>
       </Drawer>
-      
-      <Box ml={{ base: 0, md: 60 }} transition=".3s ease">
-        {/* NOTE : i just want content full height
+
+      <Box ml={{ base: 0, md: wSideBar }} transition=".3s ease">
         <Flex
           as="header"
           align="center"
@@ -152,10 +163,10 @@ export default function AppLayout({ children }) {
           w="full"
           px="4"
           bg="white"
-          _dark={{ bg: "gray.800" }}
           borderBottomWidth="1px"
           color="inherit"
           h="14"
+          display={{ base: "flex", md: "none" }}
         >
           <IconButton
             aria-label="Menu"
@@ -164,13 +175,13 @@ export default function AppLayout({ children }) {
             icon={<FiMenu />}
             size="sm"
           />
+          {/* NOTE : i just want content full height
           <InputGroup w="96" display={{ base: "none", md: "flex" }}>
             <InputLeftElement color="gray.500">
               <FiSearch />
             </InputLeftElement>
             <Input placeholder="Search here..." />
           </InputGroup>
-
           <Flex align="center">
             <Icon color="gray.500" as={FaBell} cursor="pointer" />
             <Avatar
@@ -181,15 +192,15 @@ export default function AppLayout({ children }) {
               cursor="pointer"
             />
           </Flex>
-        </Flex> 
-        */}
+          */}
+        </Flex>
 
         <Box as="main" p="4">
-          <Box rounded="md" minH="96">
+          <Box rounded="md" minH={{ base: "96", md: "3xl"}}>
             {children}
           </Box>
         </Box>
       </Box>
     </Box>
   );
-};
+}

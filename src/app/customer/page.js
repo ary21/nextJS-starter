@@ -19,7 +19,7 @@ import {
   FormHelperText,
   useDisclosure,
   Box,
-  Divider
+  Divider,
 } from "@chakra-ui/react";
 import TableComponent from "@/components/molecules/TableComponent";
 import AppLayout from "@/components/layout/AppLayout";
@@ -30,9 +30,15 @@ export default function Customer() {
   return (
     <AppLayout>
       <Card>
-        <CardHeader display="flex" justifyContent="space-between" alignContent="center">
+        <CardHeader
+          display="flex"
+          justifyContent="space-between"
+          alignContent="center"
+        >
           <Box>
-            <Text variant={"h1"} fontWeight={"bold"}>Penerima</Text>
+            <Text variant={"h1"} fontWeight={"bold"}>
+              Penerima
+            </Text>
             <Text variant={"h2"}>Penerima setiap resi pengiriman</Text>
           </Box>
           <Box>
@@ -43,7 +49,9 @@ export default function Customer() {
         </CardHeader>
         <Divider color={"gray.300"} />
         <CardBody>
-          <TableComponent />
+          <TableComponent
+            data={[]}
+          />
         </CardBody>
         <CardFooter></CardFooter>
       </Card>
