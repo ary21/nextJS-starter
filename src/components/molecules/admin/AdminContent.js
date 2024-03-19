@@ -22,18 +22,25 @@ import {
   Divider,
   ButtonGroup,
   IconButton,
-  Flex
+  Flex,
 } from "@chakra-ui/react";
 // import { useRouter } from "next/router";
 import { HOST } from "@/common/config/constant";
 import TableComponent from "@/components/molecules/TableComponent";
 import { AiFillEdit } from "react-icons/ai";
 import { BsBoxArrowUpRight, BsFillTrashFill } from "react-icons/bs";
+import useSWR from "swr";
 
-const AdminContent = ({ users }) => {
+const fetcher = (url) =>
+  fetch(url, {
+    next: { revalidate: 0 },
+    cache: "no-store",
+  }).then((res) => res.json());
+
+const AdminContent = () => {
   // const router = useRouter();
+  const { data, error, isLoading } = useSWR("/api/users", fetcher);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log('users content >>> ', users.length);
 
   const onDelete = async (id) => {
     // await fetch(`${HOST}/api/users/${id}`, { method: API_METHOD.DELETE });
@@ -44,12 +51,12 @@ const AdminContent = ({ users }) => {
   const onEdit = async (id) => {
     // get data
     // modal
-  }
+  };
 
   const submit = async () => {
     // post
     // put
-  }
+  };
 
   const columns = [
     {
@@ -71,12 +78,12 @@ const AdminContent = ({ users }) => {
       id: "action",
       label: "Action",
       selector: (row) => (
-        <ButtonGroup variant="solid" size="sm" spacing={3} id={`action-${row.id}`}>
-          <IconButton
-            colorScheme="blue"
-            icon={<BsBoxArrowUpRight />}
-            aria-label="Up"
-          />
+        <ButtonGroup
+          variant="solid"
+          size="sm"
+          spacing={3}
+          id={`action-${row.id}`}
+        >
           <IconButton
             colorScheme="green"
             icon={<AiFillEdit />}
@@ -90,15 +97,21 @@ const AdminContent = ({ users }) => {
           />
         </ButtonGroup>
       ),
-    }
-  ]
+    },
+  ];
 
   return (
     <Flex h="100vh" flexDirection="column">
       <Card>
-        <CardHeader display="flex" justifyContent="space-between" alignContent="center">
+        <CardHeader
+          display="flex"
+          justifyContent="space-between"
+          alignContent="center"
+        >
           <Box>
-            <Text variant={"h1"} fontWeight={"bold"}>Admin</Text>
+            <Text variant={"h1"} fontWeight={"bold"}>
+              Admin
+            </Text>
             <Text variant={"h2"}>Menampilkan semua user admin</Text>
           </Box>
           <Box>
@@ -109,7 +122,11 @@ const AdminContent = ({ users }) => {
         </CardHeader>
         <Divider color={"gray.300"} />
         <CardBody>
-          <TableComponent data={users} columns={columns} />
+          {isLoading ? (
+            <Text>Loading...</Text>
+          ) : (
+            <TableComponent data={data.data} columns={columns} />
+          )}
         </CardBody>
         <CardFooter></CardFooter>
       </Card>
@@ -117,14 +134,21 @@ const AdminContent = ({ users }) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Modal Form</ModalHeader>
+          <ModalHeader>Form Admin</ModalHeader>
           <ModalCloseButton />
 
           <ModalBody>
             <FormControl>
+              <FormLabel>Name</FormLabel>
+              <Input type="text" />
+            </FormControl>
+            <FormControl>
               <FormLabel>Email address</FormLabel>
               <Input type="email" />
-              <FormHelperText>We will never share your email.</FormHelperText>
+            </FormControl>
+            <FormControl>
+              <FormLabel>Phone</FormLabel>
+              <Input type="text" />
             </FormControl>
           </ModalBody>
 
@@ -139,7 +163,7 @@ const AdminContent = ({ users }) => {
         </ModalContent>
       </Modal>
     </Flex>
-  )
-}
+  );
+};
 
 export default AdminContent;

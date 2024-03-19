@@ -1,4 +1,5 @@
-import { hash } from "bcrypt";
+export const dynamic = 'force-dynamic' // defaults to auto
+// import { hash } from "bcrypt";
 import { Prisma } from "@prisma/client";
 import prisma from "@/common/prisma/prisma";
 import * as UserService from "@/common/service/UserService";
@@ -22,7 +23,7 @@ export async function POST(req, res) {
 
   try {
     const user = await UserService.createUser({
-      data: { name, email, phone, role, password: hash(req.body.password) },
+      data: { name, email, phone, role, password: req.body.password }, //hash(req.body.password)
     });
     return Response.json({ user }, { status: 201 });
   } catch (e) {
