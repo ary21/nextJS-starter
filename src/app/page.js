@@ -29,7 +29,7 @@ export default function Home() {
 
   return (
     <AppLayout>
-      <Card>
+      <Card h="full">
         <CardHeader
           display="flex"
           justifyContent="space-between"

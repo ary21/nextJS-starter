@@ -6,9 +6,12 @@ export const UserMutation = (callback) => {
     baseURL: process.env.REACT_APP_API_URL,
   });
 
-  const fetcher = (url) => api.get(url).then((res) => res.data);
+  const fetcher = (url) => api.get(url, {
+    next: { revalidate: 0 },
+    cache: "no-store",
+  }).then((res) => res.data);
 
-  const { data, error, mutate } = useSWR('/api/users', fetcher, {
+  const { data, error, isLoading, mutate } = useSWR('/api/users', fetcher, {
     onSuccess: (data, key) => {
       if (callback) callback();
     },
@@ -46,5 +49,5 @@ export const UserMutation = (callback) => {
     mutate(data.filter((item) => item.id === user.id, false));
   };
 
-  return { data, error, createUser, updateUser, removeUser };
+  return { data, error, isLoading, createUser, updateUser, removeUser };
 };

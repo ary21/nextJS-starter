@@ -25,6 +25,7 @@ import {
 } from "react-icons/hi";
 import { MdHome } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
+import { FaDolly } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -115,7 +116,7 @@ export default function AppLayout({ children }) {
         />
 
         <NavItem
-          icon={MdHome}
+          icon={FaDolly}
           onClick={() => onNavItemClick("/customer")}
           label="Customer"
         />

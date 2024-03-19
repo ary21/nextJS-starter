@@ -13,7 +13,7 @@ import AppLayout from "@/components/layout/AppLayout";
 export default function Setting() {
   return (
     <AppLayout>
-      <Card>
+      <Card h="full">
         <CardHeader
           display="flex"
           justifyContent="space-between"
