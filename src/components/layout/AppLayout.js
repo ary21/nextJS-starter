@@ -12,9 +12,17 @@ import {
   IconButton,
   Image,
   Text,
+  Avatar,
+  Divider,
+  Img,
 } from "@chakra-ui/react";
 import { BsGearFill } from "react-icons/bs";
-import { HiOutlineLogout, HiCollection, HiUsers } from "react-icons/hi";
+import {
+  HiOutlineLogout,
+  HiCollection,
+  HiUsers,
+  HiUserCircle,
+} from "react-icons/hi";
 import { MdHome } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
 import { useRouter } from "next/navigation";
@@ -50,7 +58,7 @@ export default function AppLayout({ children }) {
           role="group"
           fontWeight="semibold"
           transition=".15s ease"
-          justifyContent={{ base: "left", md: "center"}}
+          justifyContent={{ base: "left", md: "center" }}
           {...rest}
         >
           {icon && (
@@ -63,9 +71,7 @@ export default function AppLayout({ children }) {
               as={icon}
             />
           )}
-          <Text display={{ base: "unset", md: "none" }}>
-            {label}
-          </Text>
+          <Text display={{ base: "unset", md: "none" }}>{label}</Text>
         </Flex>
       </Tooltip>
     );
@@ -156,6 +162,23 @@ export default function AppLayout({ children }) {
         </Collapse>
         */}
       </Flex>
+      <Flex
+        justifyContent="center"
+        flexDirection="column"
+        alignItems="center"
+        gap={2}
+        my={2}
+        sx={{ position: "fixed", bottom: "0", width: "inherit" }}
+        display={{ base: "none", md: "flex" }}
+      >
+        <Divider />
+        <HiUserCircle
+          name="ava"
+          cursor="pointer"
+          color="#fff"
+          size="40px"
+        />
+      </Flex>
     </Box>
   );
 
@@ -200,17 +223,16 @@ export default function AppLayout({ children }) {
             </InputLeftElement>
             <Input placeholder="Search here..." />
           </InputGroup>
-          <Flex align="center">
-            <Icon color="gray.500" as={FaBell} cursor="pointer" />
-            <Avatar
+          */}
+          <Flex align="center" display={{ base: "unset", md: "none" }}>
+            <HiUserCircle
               ml="4"
-              size="sm"
-              name="anubra266"
-              src="https://avatars.githubusercontent.com/u/30869823?v=4"
+              size="40px"
+              name="ava"
+              color="blue.600"
               cursor="pointer"
             />
           </Flex>
-          */}
         </Flex>
 
         <Box as="main" p="4">
