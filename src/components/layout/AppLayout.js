@@ -6,11 +6,12 @@ import {
   DrawerOverlay,
   Flex,
   Icon,
-  Text,
+  Tooltip,
   useColorModeValue,
   useDisclosure,
   IconButton,
   Image,
+  Text,
 } from "@chakra-ui/react";
 import { BsGearFill } from "react-icons/bs";
 import { HiOutlineLogout, HiCollection, HiUsers } from "react-icons/hi";
@@ -23,45 +24,50 @@ export default function AppLayout({ children }) {
   const router = useRouter();
   const sidebar = useDisclosure();
   const color = useColorModeValue("gray.600", "gray.300");
-  const wSideBar = 40;
+  const wSideBar = 20;
 
   const onNavItemClick = (pageLink) => {
     router.push(pageLink);
   };
 
   const NavItem = (props) => {
-    const { icon, children, ...rest } = props;
+    const { label, icon, ...rest } = props;
     return (
-      <Flex
-        align="center"
-        px="4"
-        pl="4"
-        py="3"
-        cursor="pointer"
-        color="inherit"
-        _dark={{ color: "gray.400" }}
-        _hover={{
-          bg: "gray.100",
-          _dark: { bg: "gray.900" },
-          color: "gray.900",
-        }}
-        role="group"
-        fontWeight="semibold"
-        transition=".15s ease"
-        {...rest}
-      >
-        {icon && (
-          <Icon
-            mx="2"
-            boxSize="4"
-            _groupHover={{
-              color: color,
-            }}
-            as={icon}
-          />
-        )}
-        {children}
-      </Flex>
+      <Tooltip label={label} hasArrow placement="right">
+        <Flex
+          align="center"
+          px="4"
+          pl="4"
+          py="3"
+          cursor="pointer"
+          color="inherit"
+          _dark={{ color: "gray.400" }}
+          _hover={{
+            bg: "gray.100",
+            _dark: { bg: "gray.900" },
+            color: "gray.900",
+          }}
+          role="group"
+          fontWeight="semibold"
+          transition=".15s ease"
+          justifyContent={{ base: "left", md: "center"}}
+          {...rest}
+        >
+          {icon && (
+            <Icon
+              mx="2"
+              boxSize="4"
+              _groupHover={{
+                color: color,
+              }}
+              as={icon}
+            />
+          )}
+          <Text display={{ base: "unset", md: "none" }}>
+            {label}
+          </Text>
+        </Flex>
+      </Tooltip>
     );
   };
 
@@ -85,31 +91,49 @@ export default function AppLayout({ children }) {
     >
       <Flex px="4" py="5" align="center">
         <Image src="/logo.svg" alt="Choc UI" height={12} />
-        <Text ml="2" fontSize="1xl" color="white" fontWeight="semibold">
+        {/* <Text ml="2" fontSize="1xl" color="white" fontWeight="semibold">
           AppName
-        </Text>
+        </Text> */}
       </Flex>
       <Flex
-        direction="column"
         as="nav"
+        direction="column"
         fontSize="sm"
         color="white"
         aria-label="Main Navigation"
       >
-        <NavItem icon={HiCollection} onClick={() => onNavItemClick("/")}>
-          Home
-        </NavItem>
+        <NavItem
+          icon={HiCollection}
+          onClick={() => onNavItemClick("/")}
+          label="Home"
+        />
+
+        <NavItem
+          icon={MdHome}
+          onClick={() => onNavItemClick("/customer")}
+          label="Customer"
+        />
+
+        <NavItem
+          icon={HiUsers}
+          onClick={() => onNavItemClick("/admin")}
+          label="Admin"
+        />
+
+        <NavItem
+          icon={BsGearFill}
+          onClick={() => onNavItemClick("/setting")}
+          label="Setting"
+        />
+
+        <NavItem
+          icon={HiOutlineLogout}
+          onClick={() => onNavItemClick("/auth/login")}
+          label="Logout"
+        />
+
         {/* <NavItem icon={FaClipboardCheck} onClick={() => onNavItemClick('/manifest')}>Manifest</NavItem> */}
         {/* <NavItem icon={FaRss} onClick={() => onNavItemClick('/tracking')}>Tracking</NavItem> */}
-        <NavItem icon={MdHome} onClick={() => onNavItemClick("/customer")}>
-          Customer
-        </NavItem>
-        <NavItem icon={HiUsers} onClick={() => onNavItemClick("/admin")}>
-          Admin
-        </NavItem>
-        <NavItem icon={BsGearFill} onClick={() => onNavItemClick("/setting")}>
-          Setting
-        </NavItem>
         {/*
         <NavItem icon={HiCode} onClick={integrations.onToggle}>
           Integrations
@@ -131,12 +155,6 @@ export default function AppLayout({ children }) {
           </NavItem>
         </Collapse>
         */}
-        <NavItem
-          icon={HiOutlineLogout}
-          onClick={() => onNavItemClick("/auth/login")}
-        >
-          Logout
-        </NavItem>
       </Flex>
     </Box>
   );
@@ -196,7 +214,7 @@ export default function AppLayout({ children }) {
         </Flex>
 
         <Box as="main" p="4">
-          <Box rounded="md" minH={{ base: "96", md: "3xl"}}>
+          <Box rounded="md" minH={{ base: "96", md: "3xl" }}>
             {children}
           </Box>
         </Box>
