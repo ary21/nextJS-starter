@@ -31,7 +31,7 @@ import { AiFillEdit } from "react-icons/ai";
 import { BsFillTrashFill } from "react-icons/bs";
 import TableComponent from "@/components/molecules/TableComponent";
 import { useForm } from "@/hooks/useForm";
-import { UserMutation } from "@/mutation/userMutation";
+import { UserMutation } from "@/mutation/UserMutation";
 
 // const fetcher = (url) =>
 //   fetch(url, {
