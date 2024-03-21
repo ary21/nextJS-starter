@@ -12,5 +12,9 @@ export const useForm = (initialState, handleAction) => {
     handleAction(formState);
   };
 
-  return { formState, handleChange, handleSubmit };
+  const handleReset = (initialState) => {
+    setFormState(initialState);
+  }
+
+  return { formState, handleChange, handleReset, handleSubmit };
 };

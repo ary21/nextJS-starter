@@ -2,8 +2,9 @@ import axios from 'axios';
 import useSWR from 'swr';
 
 export const UserMutation = (callback) => {
+  const url = `/api/users`;
   const api = axios.create({
-    baseURL: process.env.REACT_APP_API_URL,
+    baseURL: process.env.API_URL,
   });
 
   const fetcher = (url) => api.get(url, {
@@ -11,7 +12,7 @@ export const UserMutation = (callback) => {
     cache: "no-store",
   }).then((res) => res.data);
 
-  const { data, error, isLoading, mutate } = useSWR('/api/users', fetcher, {
+  const { data, error, isLoading, mutate } = useSWR(url, fetcher, {
     onSuccess: (data, key) => {
       if (callback) callback();
     },
@@ -21,20 +22,20 @@ export const UserMutation = (callback) => {
     if (!data) {
       return false;
     }
-    const result = await api.post('/users', user);
-    mutate([...data, result.data]);
+    const result = await api.post(url, user);
+    mutate([...data.data, result.data.user]);
   };
 
   const updateUser = async (user) => {
     if (!data) {
       return false;
     }
-    const { data: updatedUser } = await api.patch(
-      `/users/${user.id}`,
+    const { data: updatedUser } = await api.put(
+      `${url}/${user.id}`,
       user
     );
     mutate(
-      data.map(
+      data.data.map(
         (user) => (user.id === updatedUser.id ? updatedUser : user),
         false
       )
@@ -45,8 +46,8 @@ export const UserMutation = (callback) => {
     if (!data) {
       return false;
     }
-    await api.delete(`/api/users/${user.id}`);
-    mutate(data.filter((item) => item.id === user.id, false));
+    await api.delete(`${url}/${user.id}`);
+    mutate(data.data.filter((item) => item.id === user.id, false));
   };
 
   return { data, error, isLoading, createUser, updateUser, removeUser };

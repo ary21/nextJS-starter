@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import {
   Card,
@@ -16,28 +17,23 @@ import {
   FormControl,
   FormLabel,
   Input,
-  FormHelperText,
-  useDisclosure,
   Box,
   Divider,
   ButtonGroup,
   IconButton,
   Flex,
+  Spinner,
+  useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 // import { useRouter } from "next/router";
 import useSWR from "swr";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillEdit } from "react-icons/ai";
 import { BsFillTrashFill } from "react-icons/bs";
 import TableComponent from "@/components/molecules/TableComponent";
 import { useForm } from "@/hooks/useForm";
 import { UserMutation } from "@/mutation/UserMutation";
-
-// const fetcher = (url) =>
-//   fetch(url, {
-//     next: { revalidate: 0 },
-//     cache: "no-store",
-//   }).then((res) => res.json());
 
 const dummyUser = {
   name: "",
@@ -48,37 +44,81 @@ const dummyUser = {
 const AdminContent = () => {
   // const router = useRouter();
   // const { data, error, isLoading } = useSWR("/api/users", fetcher);
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [currentUser, setCurrentUser] = useState(dummyUser);
   const { data, error, isLoading, createUser, updateUser, removeUser } =
     UserMutation(setCurrentUser);
 
-  const onDelete = async (user) => {
-    // await fetch(`${HOST}/api/users/${user.id}`, { method: API_METHOD.DELETE });
-    // alert(`Succes delete : ${id}`);
-    // router.push("/users");
-    // removeUser(user);
-  };
-
-  const onEdit = async (user) => {
-    // get data
-    setCurrentUser(user);
-    onOpen()
-  };
-
   const submit = async () => {
-    if (currentUser.id) {
-      updateUser()
-    } else {
-      createUser()
+    try {
+      if (currentUser && currentUser.id) {
+        await updateUser(formState);
+      } else {
+        await createUser(formState);
+      }
+      toast({
+        position: "bottom-left",
+        title: `Submit ${currentUser ? 'update' : 'create'}`,
+        description: "Looks great",
+        status: "success",
+        isClosable: true
+      });
+      onClose();
+      setCurrentUser(undefined);
+      handleReset(dummyUser);
+    } catch (error) {
+      console.log('error', error)
+      toast({
+        position: "bottom-left",
+        title: "Failed to submit",
+        description: error.message || "Something wrong",
+        status: "error",
+        isClosable: true
+      });
+      return;
     }
-    setCurrentUser(undefined);
   };
 
-  const { formState, handleChange, handleSubmit } = useForm(
+  const { formState, handleChange, handleReset, handleSubmit } = useForm(
     currentUser,
     submit
   );
+
+  const onAdd = () => {
+    setCurrentUser(undefined);
+    handleReset(dummyUser);
+    onOpen();
+  };
+
+  const onEdit = async (user) => {
+    setCurrentUser(user);
+    handleReset(user);
+    onOpen();
+  };
+
+  const onDelete = async (user) => {
+    try {
+      await removeUser(user);
+      toast({
+        position: "bottom-left",
+        title: "Delete success",
+        description: "Looks great",
+        status: "success",
+        isClosable: true
+      });
+    } catch (error) {
+      console.log('error', error)
+      toast({
+        position: "bottom-left",
+        title: "Failed to submit",
+        description: error.message || "Something wrong",
+        status: "error",
+        isClosable: true
+      });
+      return;
+    }
+  };
 
   const columns = [
     {
@@ -110,17 +150,33 @@ const AdminContent = () => {
             colorScheme="green"
             icon={<AiFillEdit />}
             aria-label="Edit"
+            onClick={() => onEdit(row)}
           />
           <IconButton
             colorScheme="red"
             variant="outline"
             icon={<BsFillTrashFill />}
             aria-label="Delete"
+            onClick={() => onDelete(row)}
           />
         </ButtonGroup>
       ),
     },
   ];
+
+  useEffect(() => {
+    if (!error) return;
+    console.log('error', error);
+    toast({
+      position: "bottom-left",
+      title: "Failed fetch data",
+      description: error.message || "Something wrong",
+      status: "error",
+      isClosable: true
+    })
+  }, [error])
+
+  console.log('currentUser', currentUser)
 
   return (
     <Flex flexDirection="column">
@@ -137,7 +193,7 @@ const AdminContent = () => {
             <Text variant={"h2"}>Menampilkan daftar semua user admin</Text>
           </Box>
           <Box>
-            <Button mb={2} colorScheme="blue" size={"sm"} onClick={onOpen}>
+            <Button mb={2} colorScheme="blue" size={"sm"} onClick={onAdd}>
               Tambah Data Baru
             </Button>
           </Box>
@@ -145,7 +201,10 @@ const AdminContent = () => {
         <Divider color={"gray.300"} />
         <CardBody>
           {isLoading ? (
-            <Text>Loading...</Text>
+            <Flex gap={2}>
+              <Spinner />
+              <Text>Loading...</Text>
+            </Flex>
           ) : (
             <TableComponent data={data.data} columns={columns} />
           )}
@@ -192,6 +251,19 @@ const AdminContent = () => {
                     onChange={handleChange}
                   />
                 </FormControl>
+                {!currentUser && (
+                  <FormControl>
+                    <FormLabel>Password</FormLabel>
+                    <Input
+                      type="password"
+                      name="password"
+                      id="inputPassword"
+                      required={!currentUser}
+                      value={formState.password}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                )}
               </Flex>
             </ModalBody>
 

@@ -23,7 +23,7 @@ export default function TableComponent({ data, columns }) {
       alignItems="center"
       justifyContent="center"
     >
-      {!!data.length ? (
+      {data && !!data.length ? (
         <Table
           w="full"
           bg="white"
@@ -126,7 +126,7 @@ export default function TableComponent({ data, columns }) {
           <Text color="black.500">Silahkan coba ubah pencarian atau tambahkan data baru</Text>
         </Flex>
       )}
-      {!!data.length && <PaginationComponent total={data.length} />}
+      {data && !!data.length && <PaginationComponent total={data.length} />}
     </Flex>
   );
 }
