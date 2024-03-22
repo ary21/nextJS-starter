@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import Pagination from "@choc-ui/paginator";
 
 export default function PaginationComponent({ total, currentPage, setCurrentPage }){
@@ -15,8 +15,10 @@ export default function PaginationComponent({ total, currentPage, setCurrentPage
         total={total}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
-        defaultCurrent={5}
+        showTotal={(total) => <Text>Total: {total}</Text>}
         pageSize={5}
+        defaultPage={1}
+        defaultCurrent={5}
         onChange={(page) => setCurrentPage(page - 1)}
         paginationProps={{ display: "flex" }}
       />
