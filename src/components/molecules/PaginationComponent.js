@@ -15,7 +15,7 @@ export default function PaginationComponent({ total, currentPage, setCurrentPage
         total={total}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
-        showTotal={(total) => <Text>Total: {total}</Text>}
+        showTotal={(total) => <Text fontWeight={"bold"} color={"gray.500"} textAlign={"left"}>Total: {total} items</Text>}
         pageSize={5}
         defaultPage={1}
         defaultCurrent={5}
