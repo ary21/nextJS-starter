@@ -44,11 +44,13 @@ const dummyUser = {
 const AdminContent = () => {
   // const router = useRouter();
   // const { data, error, isLoading } = useSWR("/api/users", fetcher);
+
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [pageIndex, setPageIndex] = useState(0);
   const [currentUser, setCurrentUser] = useState(dummyUser);
   const { data, error, isLoading, createUser, updateUser, removeUser } =
-    UserMutation(setCurrentUser);
+    UserMutation(setCurrentUser, pageIndex);
 
   const submit = async () => {
     try {
@@ -59,22 +61,22 @@ const AdminContent = () => {
       }
       toast({
         position: "bottom-left",
-        title: `Submit ${currentUser ? 'update' : 'create'}`,
+        title: `Submit ${currentUser ? "update" : "create"}`,
         description: "Looks great",
         status: "success",
-        isClosable: true
+        isClosable: true,
       });
       onClose();
       setCurrentUser(undefined);
       handleReset(dummyUser);
     } catch (error) {
-      console.log('error', error)
+      console.log("error", error);
       toast({
         position: "bottom-left",
         title: "Failed to submit",
         description: error.message || "Something wrong",
         status: "error",
-        isClosable: true
+        isClosable: true,
       });
       return;
     }
@@ -105,16 +107,16 @@ const AdminContent = () => {
         title: "Delete success",
         description: "Looks great",
         status: "success",
-        isClosable: true
+        isClosable: true,
       });
     } catch (error) {
-      console.log('error', error)
+      console.log("error", error);
       toast({
         position: "bottom-left",
         title: "Failed to submit",
         description: error.message || "Something wrong",
         status: "error",
-        isClosable: true
+        isClosable: true,
       });
       return;
     }
@@ -166,17 +168,17 @@ const AdminContent = () => {
 
   useEffect(() => {
     if (!error) return;
-    console.log('error', error);
+    console.log("error", error);
     toast({
       position: "bottom-left",
       title: "Failed fetch data",
       description: error.message || "Something wrong",
       status: "error",
-      isClosable: true
-    })
-  }, [error])
+      isClosable: true,
+    });
+  }, [error]);
 
-  console.log('currentUser', currentUser)
+  console.log("currentUser", currentUser);
 
   return (
     <Flex flexDirection="column">
@@ -206,7 +208,13 @@ const AdminContent = () => {
               <Text>Loading...</Text>
             </Flex>
           ) : (
-            <TableComponent data={data.data} columns={columns} />
+            <TableComponent
+              columns={columns}
+              data={data.data}
+              total={data.total}
+              onChangePanigate={setPageIndex}
+              currentPage={pageIndex}
+            />
           )}
         </CardBody>
         <CardFooter></CardFooter>

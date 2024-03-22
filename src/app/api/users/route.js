@@ -3,8 +3,11 @@ export const dynamic = "force-dynamic"; // defaults to auto
 import * as UserService from "@/common/service/UserService";
 
 export async function GET(req, res) {
-  const users = await UserService.getAllUsers();
-  return Response.json({ data: users });
+  const skip = +req.nextUrl.searchParams.get("page") || 0;
+  const take = +req.nextUrl.searchParams.get("limit") || 5;
+  const users = await UserService.getAllUsers({}, skip, take);
+  const total = await UserService.countUser(); 
+  return Response.json({ data: users, total });
 }
 
 export async function POST(req, res) {

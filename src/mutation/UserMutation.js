@@ -1,7 +1,7 @@
 import axios from 'axios';
 import useSWR from 'swr';
 
-export const UserMutation = (callback) => {
+export const UserMutation = (callback, pageIndex) => {
   const url = `/api/users`;
   const api = axios.create({
     baseURL: process.env.API_URL,
@@ -12,7 +12,7 @@ export const UserMutation = (callback) => {
     cache: "no-store",
   }).then((res) => res.data);
 
-  const { data, error, isLoading, mutate } = useSWR(url, fetcher, {
+  const { data, error, isLoading, mutate } = useSWR(`${url}?page=${pageIndex}`, fetcher, {
     onSuccess: (data, key) => {
       if (callback) callback();
     },

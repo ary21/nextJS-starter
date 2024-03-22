@@ -1,8 +1,10 @@
 import { prisma } from "@/common/prisma/prisma";
 
-export const getAllUsers = async (where) => {
+export const getAllUsers = async (where, skip, take) => {
   return prisma.user.findMany({
     where: { deletedAt: null, ...where },
+    skip,
+    take,
     select: {
       id: true,
       name: true,

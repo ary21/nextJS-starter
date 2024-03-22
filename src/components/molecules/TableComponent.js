@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import PaginationComponent from "./PaginationComponent";
 
-export default function TableComponent({ data, columns }) {
+export default function TableComponent({ data, columns, total, onChangePanigate, currentPage }) {
   return (
     <Flex
       w="full"
@@ -126,7 +126,7 @@ export default function TableComponent({ data, columns }) {
           <Text color="black.500">Silahkan coba ubah pencarian atau tambahkan data baru</Text>
         </Flex>
       )}
-      {data && !!data.length && <PaginationComponent total={data.length} />}
+      {data && !!data.length && <PaginationComponent total={total} currentPage={currentPage} setCurrentPage={onChangePanigate} />}
     </Flex>
   );
 }
