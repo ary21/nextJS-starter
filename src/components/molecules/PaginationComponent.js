@@ -17,6 +17,7 @@ export default function PaginationComponent({ total, currentPage, setCurrentPage
         setCurrentPage={setCurrentPage}
         defaultCurrent={5}
         pageSize={5}
+        onChange={(page) => setCurrentPage(page - 1)}
         paginationProps={{ display: "flex" }}
       />
     </Flex>
