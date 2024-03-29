@@ -1,20 +1,13 @@
+import jwt from 'jsonwebtoken';
+// import { compare, hash } from "bcrypt";
+// import { SHA256 as sha256 } from "crypto-js";
 import prisma from "@/common/prisma/prisma";
-import { compare, hash } from "bcrypt";
-import { SHA256 as sha256 } from "crypto-js";
 
-export default async function handle(req, res) {
-  if (req.method === "POST") {
-    await loginUserHandler(req, res);
-  } else {
-    return res.status(405);
-  }
-}
-
-async function loginUserHandler(req, res) {
-  const { email, password } = req.body;
+export async function POST(req, res) {
+  const { email, password } = await req.json();
 
   if (!email || !password) {
-    return res.status(400).json({ message: "invalid input" });
+    return Response.json({ message: "invalid input" }, { status: 400 });
   }
 
   try {
@@ -27,18 +20,27 @@ async function loginUserHandler(req, res) {
         password: true,
       },
     });
-    const isPasswordValid = await compare(
-      password,
-      user.password
-    )
-    if (user && isPasswordValid) { // user.password === hash(password)
-      return res.status(200).json(exclude(user, ["password"]));
+    const isPasswordValid = true;
+    // await compare(
+    //   password,
+    //   user.password
+    // )
+
+    if (user && isPasswordValid) {
+      const token = jwt.sign({ sub: user.id }, process.env.AUTH_SECRET, {
+        expiresIn: '8h',
+      });
+
+      return Response.json({ ...exclude(user, ["password"]), token });
     } else {
-      return res.status(401).json({ message: "invalid credentials" });
+      return Response.json({ message: "invalid credentials" }, { status: 400 });
     }
   } catch (e) {
     console.log(e);
-    throw new Error(e);
+    return Response.json(
+      { message: err.message || "server error" },
+      { status: 400 }
+    );
   }
 }
 

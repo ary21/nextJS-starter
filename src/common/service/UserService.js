@@ -1,4 +1,4 @@
-import { prisma } from "@/common/prisma/prisma";
+import prisma from "@/common/prisma/prisma";
 
 export const getAllUsers = async (where, skip, take) => {
   return prisma.user.findMany({
@@ -30,12 +30,11 @@ export const getOneUser = async (where) => {
   });
 };
 
-
 export const countUser = async (where) => {
   return prisma.user.count({
     where: { deletedAt: null, ...where },
   });
-}
+};
 
 export const createUser = async (data) => {
   return prisma.user.create({ data });

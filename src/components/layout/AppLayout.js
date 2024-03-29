@@ -135,7 +135,10 @@ export default function AppLayout({ children }) {
 
         <NavItem
           icon={HiOutlineLogout}
-          onClick={() => onNavItemClick("/auth/login")}
+          onClick={() => {
+            localStorage.removeItem('token');
+            window.location.href = '/auth/login';
+          }}
           label="Logout"
         />
 

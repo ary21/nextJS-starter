@@ -17,10 +17,14 @@ import {
 import { validateEmail } from "@/common/utils/index";
 import AuthLayout from "@/components/layout/AuthLayout";
 import { HiUserCircle, HiLockOpen } from "react-icons/hi";
+import { useFormState, useFormStatus } from "react-dom";
+import { authenticate } from "@/app/lib/actions";
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+
+  const [email, setEmail] = useState("admin@gmail.com");
+  const [password, setPassword] = useState("test123");
   const [error, setError] = useState("");
   const [emailInPutError, setEmailInputError] = useState(false);
   const [passwordInPutError, setPasswordInputError] = useState(false);
@@ -31,6 +35,7 @@ function LoginPage() {
   const handleShowClick = () => setShowPassword(!showPassword);
 
   const router = useRouter();
+  const { pending } = useFormStatus();
 
   useEffect(() => {
     validate();
@@ -40,30 +45,33 @@ function LoginPage() {
     setIsLoading(true);
     e.preventDefault();
 
-    // TODO :  to api auth/login remove bellow router.push
-    router.push("/");
-
-    let res;
-    // await signIn("credentials", {
-    //   email,
-    //   password,
-    //   callbackUrl: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL}`,
-    //   redirect: false,
-    // });
-    setIsLoading(false);
-    
-    if (res?.ok) {
-      // toastsuccess
-      console.log("success");
-      router.push("/");
-      return;
-    } else {
-      // Toast failed
-      setError("Failed! Check you input and try again.");
-      // return;
-      console.log("Failed", res);
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      console.log('data >', data);
+      setIsLoading(false);
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+        document.cookie = `token=${data.token}; path=/; max-age=${60 * 60 * 24};`; // Set a cookie
+        setInterval(() => {
+          window.location.href = '/admin';
+          router.push("/admin");
+        }, 2000);
+        return;
+      } else {
+        console.log("Failed", data);
+        setError("Failed! something not working properly.");
+      }
+    } catch (error) {
+      console.log("Failed", error);
+      setError("Failed! server error.");
     }
-    return res;
   }
 
   function validate() {
@@ -89,9 +97,11 @@ function LoginPage() {
       >
         <Stack
           spacing={4}
-          p="1rem"
+          px="1rem"
+          py="2rem"
           backgroundColor="whiteAlpha.900"
           boxShadow="md"
+          borderRadius={"1rem"}
         >
           {error && (
             <div className="flex w-full py-3 p-1 rounded-md bg-red-500 text-white">
@@ -105,6 +115,7 @@ function LoginPage() {
                 children={<HiUserCircle color="gray.300" />}
               />
               <Input
+                required
                 type="email"
                 placeholder="input email address here"
                 value={email}
@@ -122,6 +133,7 @@ function LoginPage() {
                 children={<HiLockOpen color="gray.300" />}
               />
               <Input
+                required
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
                 value={password}
@@ -141,13 +153,14 @@ function LoginPage() {
           </FormControl>
           <Button
             borderRadius={0}
-            type="submit"
             variant="solid"
-            colorScheme="teal"
+            colorScheme="blue"
             width="full"
+            type="submit"
+            aria-disabled={pending}
             disabled={isLoading ? true : false}
           >
-            {isLoading ? "Loading..." : "Sign In"}
+            {isLoading || pending ? "Loading..." : "LogIn"}
           </Button>
         </Stack>
       </form>

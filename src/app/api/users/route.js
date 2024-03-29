@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic"; // defaults to auto
-// import { hash } from "bcrypt";
+// import bcrypt from "bcrypt";
 import * as UserService from "@/common/service/UserService";
 
 export async function GET(req, res) {
@@ -14,7 +14,6 @@ export async function POST(req, res) {
   const { name, email, phone, role, password } = await req.json();
 
   if (!name || !email || !phone || !password) {
-    errors.push();
     return Response.json({ message: "invalid input" }, { status: 400 });
   }
 
@@ -25,7 +24,7 @@ export async function POST(req, res) {
     }
 
     const user = await UserService.createUser(
-      { name, email, phone, role: role || "ADMIN", password } // password: hash(req.body.password)
+      { name, email, phone, role: role || "ADMIN", password: '12345' } // bcrypt.hash(req.body.password)
     );
     return Response.json({ user }, { status: 201 });
   } catch (err) {

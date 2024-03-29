@@ -1,5 +1,4 @@
 export const dynamic = "force-dynamic"; // defaults to auto
-// import { hash } from "bcrypt";
 import * as UserService from "@/common/service/UserService";
 
 export async function GET(req, { params }) {

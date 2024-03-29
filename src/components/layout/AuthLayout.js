@@ -1,4 +1,4 @@
-import { Flex, Heading, Stack, Box, Avatar } from "@chakra-ui/react";
+import { Flex, Heading, Stack, Box, Avatar, Text } from "@chakra-ui/react";
 
 function AuthLayout({ children }) {
   return (
@@ -16,8 +16,9 @@ function AuthLayout({ children }) {
         justifyContent="center"
         alignItems="center"
       >
-        <Avatar bg="teal.500" />
-        <Heading color="teal.400">Welcome</Heading>
+        <Avatar bg="blue.600" />
+        <Heading color="blue.400">MYAPP</Heading>
+        <Text color="black.400">Please Sign in to continue</Text>
         <Box minW={{ base: "90%", md: "468px" }}>{children}</Box>
       </Stack>
     </Flex>
