@@ -1,4 +1,5 @@
-import jwt from 'jsonwebtoken';
+import * as jose from 'jose';
+// import jwt from 'jsonwebtoken';
 // import { compare, hash } from "bcrypt";
 // import { SHA256 as sha256 } from "crypto-js";
 import prisma from "@/common/prisma/prisma";
@@ -27,7 +28,7 @@ export async function POST(req, res) {
     // )
 
     if (user && isPasswordValid) {
-      const token = jwt.sign({ sub: user.id }, process.env.AUTH_SECRET, {
+      const token = new jose.SignJWT({ sub: user.id }, 'OKE123***', {
         expiresIn: '8h',
       });
 
@@ -38,7 +39,7 @@ export async function POST(req, res) {
   } catch (e) {
     console.log(e);
     return Response.json(
-      { message: err.message || "server error" },
+      { message: e.message || "server error" },
       { status: 400 }
     );
   }

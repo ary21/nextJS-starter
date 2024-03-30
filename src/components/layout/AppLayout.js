@@ -28,6 +28,7 @@ import { FiMenu } from "react-icons/fi";
 import { FaDolly } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { removeCookie } from "@/common/utils/index";
 
 export default function AppLayout({ children }) {
   const router = useRouter();
@@ -137,6 +138,7 @@ export default function AppLayout({ children }) {
           icon={HiOutlineLogout}
           onClick={() => {
             localStorage.removeItem('token');
+            removeCookie('token');
             window.location.href = '/auth/login';
           }}
           label="Logout"

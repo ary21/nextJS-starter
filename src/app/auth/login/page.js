@@ -12,20 +12,18 @@ import {
   Link,
   FormControl,
   FormHelperText,
+  FormErrorMessage,
   InputRightElement,
 } from "@chakra-ui/react";
 import { validateEmail } from "@/common/utils/index";
 import AuthLayout from "@/components/layout/AuthLayout";
 import { HiUserCircle, HiLockOpen } from "react-icons/hi";
-import { useFormState, useFormStatus } from "react-dom";
-import { authenticate } from "@/app/lib/actions";
+import { getCookie } from "@/common/utils/index";
 
 function LoginPage() {
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
-
   const [email, setEmail] = useState("admin@gmail.com");
   const [password, setPassword] = useState("test123");
-  const [error, setError] = useState("");
+  const [msg, setMsg] = useState("");
   const [emailInPutError, setEmailInputError] = useState(false);
   const [passwordInPutError, setPasswordInputError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -33,13 +31,18 @@ function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowClick = () => setShowPassword(!showPassword);
-
   const router = useRouter();
-  const { pending } = useFormStatus();
 
   useEffect(() => {
     validate();
   }, [email, password]);
+
+  useEffect(() => {
+    const token = getCookie('token');
+    if (token) {
+      window.location.href = '/';
+    }
+ }, []);
 
   async function handleSubmit(e) {
     setIsLoading(true);
@@ -57,20 +60,19 @@ function LoginPage() {
       console.log('data >', data);
       setIsLoading(false);
       if (data.token) {
+        setMsg("Success login!");
         localStorage.setItem('token', data.token);
-        document.cookie = `token=${data.token}; path=/; max-age=${60 * 60 * 24};`; // Set a cookie
-        setInterval(() => {
-          window.location.href = '/admin';
-          router.push("/admin");
-        }, 2000);
+        document.cookie = `token=${data.token}; path=/; max-age=${60 * 60 * 24};`; 
+        window.location.href = '/';
+        router.push("/");
         return;
       } else {
-        console.log("Failed", data);
-        setError("Failed! something not working properly.");
+        console.log("Failed >", data);
+        setMsg(`Failed! ${data.message || 'something not working properly.'}`);
       }
     } catch (error) {
-      console.log("Failed", error);
-      setError("Failed! server error.");
+      console.log("Error >", error);
+      setMsg(`Failed! server error.`);
     }
   }
 
@@ -103,9 +105,9 @@ function LoginPage() {
           boxShadow="md"
           borderRadius={"1rem"}
         >
-          {error && (
+          {msg && (
             <div className="flex w-full py-3 p-1 rounded-md bg-red-500 text-white">
-              {error}
+              {msg}
             </div>
           )}
           <FormControl>
@@ -124,6 +126,7 @@ function LoginPage() {
                 }}
               />
             </InputGroup>
+            <FormErrorMessage>{emailInPutError}</FormErrorMessage>
           </FormControl>
           <FormControl>
             <InputGroup>
@@ -150,6 +153,7 @@ function LoginPage() {
             <FormHelperText textAlign="right">
               <Link>forgot password?</Link>
             </FormHelperText>
+            <FormErrorMessage>{passwordInPutError}</FormErrorMessage>
           </FormControl>
           <Button
             borderRadius={0}
@@ -157,10 +161,9 @@ function LoginPage() {
             colorScheme="blue"
             width="full"
             type="submit"
-            aria-disabled={pending}
             disabled={isLoading ? true : false}
           >
-            {isLoading || pending ? "Loading..." : "LogIn"}
+            {isLoading ? "Loading..." : "LogIn"}
           </Button>
         </Stack>
       </form>
