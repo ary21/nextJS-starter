@@ -37,10 +37,10 @@ export default function Home() {
         >
           <Box>
             <Text variant={"h1"} fontWeight={"bold"}>
-              Resi
+              Dashboard
             </Text>
             <Text variant={"h2"}>
-              Resi pengiriman untuk setiap status perjalanan
+              Data untuk setiap status
             </Text>
           </Box>
           <Stack
@@ -66,7 +66,7 @@ export default function Home() {
               size={"sm"}
               minWidth={"150px"}
             >
-              Scan dari Depo (20)
+              Status 1 (20)
             </Button>
             <Button
               colorScheme="blue"
@@ -74,7 +74,7 @@ export default function Home() {
               size={"sm"}
               minWidth={"150px"}
             >
-              Sudah Dikemas (15)
+              Status 2 (15)
             </Button>
             <Button
               colorScheme="yellow"
@@ -82,7 +82,7 @@ export default function Home() {
               size={"sm"}
               minWidth={"150px"}
             >
-              Dalam Perjalanan (32)
+              Status 3 (32)
             </Button>
             <Button
               colorScheme="green"

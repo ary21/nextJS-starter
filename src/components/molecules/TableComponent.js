@@ -27,6 +27,7 @@ export default function TableComponent({ data, columns, total, onChangePanigate,
         <Table
           w="full"
           bg="white"
+          size='sm'
           display={{
             base: "block",
             md: "table",
@@ -50,7 +51,7 @@ export default function TableComponent({ data, columns, total, onChangePanigate,
           >
             <Tr>
               {columns.map((col) => (
-                <Th key={col.id}>{col.label}</Th>
+                <Th key={col.id} display="table-cell" color="black">{col.label}</Th>
               ))}
             </Tr>
           </Thead>
