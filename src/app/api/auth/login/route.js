@@ -1,7 +1,5 @@
-import * as jose from 'jose';
-// import jwt from 'jsonwebtoken';
-// import { compare, hash } from "bcrypt";
-// import { SHA256 as sha256 } from "crypto-js";
+import * as jose from "jose";
+import argon2 from "argon2";
 import prisma from "@/common/prisma/prisma";
 
 export async function POST(req, res) {
@@ -21,18 +19,21 @@ export async function POST(req, res) {
         password: true,
       },
     });
-    const isPasswordValid = true;
-    // await compare(
-    //   password,
-    //   user.password
-    // )
+    const isPasswordValid = argon2.verify(user.password, password);
 
     if (user && isPasswordValid) {
-      const token = new jose.SignJWT({ sub: user.id }, 'OKE123***', {
-        expiresIn: '8h',
-      });
+      const secret = new TextEncoder().encode(
+        'cc7e0d44fd473002f1c42167459001140ec6389b7353f8088f4d9a95f2f596f2',
+      )
+      const jwt = await new jose.SignJWT({ "urn:jwt:claim": true })
+        .setProtectedHeader({ alg: 'HS256' })
+        .setIssuedAt()
+        .setIssuer(user.id)
+        .setAudience(user.name)
+        .setExpirationTime("2h")
+        .sign(secret);
 
-      return Response.json({ ...exclude(user, ["password"]), token });
+      return Response.json({ ...exclude(user, ["password"]), token: jwt });
     } else {
       return Response.json({ message: "invalid credentials" }, { status: 400 });
     }
